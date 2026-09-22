@@ -57,15 +57,7 @@ def get_job_recommendation(user_input):
 # -----------------------------
 # LOAD MODELS
 # -----------------------------
-try:
-    model = joblib.load("job_model.pkl")
-    vectorizer = joblib.load("job_vectorizer.pkl")
-    ocr_reader = easyocr.Reader(["en"], gpu=False)
 
-except Exception:
-    model = None
-    vectorizer = None
-    ocr_reader = None
 
 
 # -----------------------------
@@ -74,6 +66,29 @@ except Exception:
 @app.route("/")
 def home():
     return redirect(url_for("login"))
+
+
+# -----------------------------
+# LOAD MODELS
+# -----------------------------
+
+try:
+    model = joblib.load("job_model.pkl")
+    vectorizer = joblib.load("job_vectorizer.pkl")
+except Exception:
+    model = None
+    vectorizer = None
+
+ocr_reader = None
+
+
+def get_ocr_reader():
+    global ocr_reader
+
+    if ocr_reader is None:
+        ocr_reader = easyocr.Reader(["en"], gpu=False)
+
+    return ocr_reader
 
 
 # -----------------------------
