@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import os
 import json
-import easyocr
 import joblib
 
 from resume_ai import extract_resume_text
@@ -86,6 +85,7 @@ def get_ocr_reader():
     global ocr_reader
 
     if ocr_reader is None:
+        import easyocr
         ocr_reader = easyocr.Reader(["en"], gpu=False)
 
     return ocr_reader
