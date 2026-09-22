@@ -1,0 +1,37 @@
+[
+  {"id": 1, "skills": ["python", "flask", "sql"], "education": ["B.Tech in Computer Science"], "role": "Backend Web Developer"},
+  {"id": 2, "skills": ["html", "css", "javascript"], "education": ["B.Tech in Computer Science"], "role": "Frontend Developer"},
+  {"id": 3, "skills": ["python", "pandas", "numpy"], "education": ["B.Sc in Information Technology"], "role": "Data Analyst"},
+  {"id": 4, "skills": ["java", "spring", "mysql"], "education": ["B.E. in Electronics and Communication"], "role": "Java Developer"},
+  {"id": 5, "skills": ["aws", "docker", "kubernetes"], "education": ["B.Tech in Computer Science"], "role": "DevOps Engineer"},
+  {"id": 6, "skills": ["react", "node.js", "mongodb"], "education": ["M.Sc in Information Science"], "role": "MERN Stack Developer"},
+  {"id": 7, "skills": ["solidity", "blockchain", "ethereum"], "education": ["B.Tech in Computer Science"], "role": "Blockchain Developer"},
+  {"id": 8, "skills": ["figma", "ui/ux"], "education": ["B.Sc in Information Technology"], "role": "UI/UX Designer"},
+  {"id": 9, "skills": ["python", "pytorch", "nlp"], "education": ["M.Tech in AI"], "role": "AI/ML Engineer"},
+  {"id": 10, "skills": ["c#", "unity", "game design"], "education": ["B.E. in Electronics and Communication"], "role": "Game Developer"},
+  {
+    "role": "Cybersecurity Analyst",
+    "skills": ["Networking", "Ethical Hacking", "Firewalls"],
+    "education": ["B.Tech", "Information Technology"]
+  },
+  {
+    "role": "Backend Web Developer",
+    "skills": ["python", "flask", "sql", "postgresql"],
+    "education": ["B.Tech", "Computer Science"]
+  },
+  {
+    "role": "Data Analyst",
+    "skills": ["python", "sql", "pandas", "tableau"],
+    "education": ["B.Tech", "Computer Science", "B.Sc"]
+  },
+  {
+    "role": "Frontend Developer",
+    "skills": ["html", "css", "javascript", "react"],
+    "education": ["B.Tech", "Computer Science"]
+  },
+  {
+    "role": "Blockchain Developer",
+    "skills": ["solidity", "ethereum", "web3"],
+    "education": ["B.Tech", "Computer Science"]
+  }
+]

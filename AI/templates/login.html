@@ -1,0 +1,301 @@
+<!-- backend/templates/login.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Based Career Guidance and Fake Job Detection Platform</title>
+    
+    <!-- Inline Premium Styling - Bypasses Browser Cache Completely -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap');
+
+        :root {
+            --bg-main: #040814;
+            --bg-card: rgba(13, 22, 47, 0.85);
+            --bg-input: #090f24;
+            --primary: #0070f3;
+            --neon-cyan: #00f2fe;
+            --neon-purple: #7928ca;
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            position: relative;
+            background: radial-gradient(circle at 50% 50%, #0d1b3e 0%, #040814 100%);
+            overflow: hidden;
+        }
+
+        /* Ambient Glowing Background Lights */
+        body::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            top: -100px;
+            left: -100px;
+            background: radial-gradient(circle, rgba(0, 112, 243, 0.25) 0%, rgba(0,0,0,0) 70%);
+            z-index: 1;
+        }
+
+        body::after {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            bottom: -100px;
+            right: -100px;
+            background: radial-gradient(circle, rgba(0, 242, 254, 0.2) 0%, rgba(0,0,0,0) 70%);
+            z-index: 1;
+        }
+
+        /* Centered Wrapper Container */
+        .login-wrapper {
+            width: 100%;
+            max-width: 580px;
+            z-index: 10;
+            position: relative;
+            animation: slideUp 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Top Header Section */
+        .login-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .shield-logo {
+            font-size: 65px;
+            margin-bottom: 15px;
+            display: inline-block;
+            filter: drop-shadow(0 0 20px var(--neon-cyan));
+            animation: bounce 3s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Gradient Title */
+        .login-header h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1.4;
+            background: linear-gradient(135deg, #ffffff 30%, var(--neon-cyan) 70%, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+        }
+
+        .login-header .subtitle {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--neon-cyan);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Glowing Modern Glassmorphism Card */
+        .login-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 28px;
+            padding: 45px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6), 
+                        0 0 50px rgba(0, 112, 243, 0.15);
+            position: relative;
+        }
+
+        /* Top Neon Border Line */
+        .login-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--neon-cyan), var(--neon-purple));
+            border-top-left-radius: 28px;
+            border-top-right-radius: 28px;
+        }
+
+        /* Access Info Box */
+        .hint-badge {
+            background: rgba(0, 242, 254, 0.08);
+            border: 1px solid rgba(0, 242, 254, 0.25);
+            color: #e0f2fe;
+            padding: 14px;
+            border-radius: 14px;
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 30px;
+            line-height: 1.5;
+        }
+
+        /* Form Inputs */
+        .form-group-modern {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 26px;
+        }
+
+        .form-group-modern label {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .input-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 18px;
+            font-size: 18px;
+            color: var(--text-muted);
+        }
+
+        .input-container input {
+            width: 100%;
+            background-color: var(--bg-input);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 18px 18px 18px 52px;
+            border-radius: 14px;
+            color: var(--text-main);
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .input-container input:focus {
+            outline: none;
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 25px rgba(0, 242, 254, 0.25);
+            background-color: #0e1736;
+        }
+
+        /* Big Colorful Button (Fixed Text) */
+        .btn-primary-modern {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--neon-purple) 100%);
+            color: #ffffff;
+            padding: 18px;
+            border: none;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0, 112, 243, 0.4);
+            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-primary-modern:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(0, 242, 254, 0.4);
+            filter: brightness(1.1);
+        }
+
+        .alert-banner {
+            padding: 14px;
+            border-radius: 14px;
+            font-size: 14px;
+            margin-bottom: 24px;
+            text-align: center;
+            font-weight: 600;
+            background: rgba(244, 63, 94, 0.15);
+            border: 1px solid #f43f5e;
+            color: #fda4af;
+        }
+
+        .footer-credit {
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-wrapper">
+        <!-- Brand Title Header -->
+        <div class="login-header">
+            <div class="shield-logo">🛡️</div>
+            <h1>AI-Powered Fake Job Posting Detection & Trust Analysis System</h1>
+            <p class="subtitle">Secure Verification & Trust Node Gateway</p>
+        </div>
+        
+        <!-- Center Login Card -->
+        <div class="login-card">
+            <div class="hint-badge">
+                💡 <strong>Demo Access Credentials</strong><br>
+                Username: <strong>admin</strong> &nbsp;|&nbsp; Security Key: <strong>1234</strong>
+            </div>
+            
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, msg in messages %}
+                  <div class="alert-banner">{{ msg }}</div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+
+            <form action="/login" method="POST">
+                <div class="form-group-modern">
+                    <label for="username">Operator Username</label>
+                    <div class="input-container">
+                        <span class="input-icon">👤</span>
+                        <input type="text" id="username" name="username" placeholder="Enter system username..." required autocomplete="off">
+                    </div>
+                </div>
+                
+                <div class="form-group-modern">
+                    <label for="password">Security Token Key</label>
+                    <div class="input-container">
+                        <span class="input-icon">🔑</span>
+                        <input type="password" id="password" name="password" placeholder="Enter security access code..." required>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-primary-modern">Unlock Workspace →</button>
+            </form>
+        </div>
+        <div class="footer-credit">JobGuardAI Premium Analytics Platform</div>
+    </div>
+</body>
+</html>

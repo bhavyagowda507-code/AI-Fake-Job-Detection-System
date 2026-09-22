@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI-Powered Fake Job Detection & Trust Analysis System</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap');
+
+        :root {
+            --bg-main: #040814;
+            --bg-card: rgba(13, 22, 47, 0.7);
+            --bg-input: #090f24;
+            --primary: #0070f3;
+            --neon-cyan: #00f2fe;
+            --neon-purple: #7928ca;
+            --text-main: #ffffff;
+            --text-muted: #94a3b8;
+            --accent-safe: #10b981;
+            --accent-scam: #f43f5e;
+            --card-border: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            background: radial-gradient(circle at 50% 50%, #0d1b3e 0%, #040814 100%);
+            overflow: hidden;
+        }
+
+        /* App Container Workspace layout */
+        .app-container {
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        /* Left Hand Premium Navigation Sidebar */
+        .sidebar {
+            width: 300px;
+            background-color: rgba(6, 11, 26, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-right: 1px solid var(--card-border);
+            padding: 40px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .sidebar-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .sidebar-logo {
+            font-size: 38px;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 0 10px var(--neon-cyan));
+        }
+
+        .sidebar h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: #ffffff;
+            line-height: 1.4;
+            background: linear-gradient(135deg, #fff, var(--neon-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .sidebar a {
+            color: var(--text-muted);
+            text-decoration: none;
+            padding: 14px 20px;
+            border-radius: 14px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-weight: 600;
+            font-size: 15px;
+            border: 1px solid transparent;
+        }
+
+        .sidebar a:hover {
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.03);
+            border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .sidebar a.active {
+            background: linear-gradient(90deg, rgba(0, 112, 243, 0.2) 0%, rgba(0, 112, 243, 0.02) 100%);
+            color: var(--neon-cyan);
+            border-left: 4px solid var(--primary);
+            border-color: rgba(0, 242, 254, 0.15);
+        }
+
+        /* Right Content Body Panel */
+        .main-content {
+            flex-grow: 1;
+            padding: 45px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .main-content h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #fff, var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-desc {
+            color: var(--text-muted);
+            font-size: 15px;
+            margin-bottom: 35px;
+        }
+
+        /* Live Analytics Stat Cards Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--card-border);
+            padding: 26px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 100%;
+            background: var(--primary);
+        }
+
+        .card.scam-card::before { background: var(--accent-scam); }
+        .card.safe-card::before { background: var(--accent-safe); }
+
+        .card h3 {
+            color: var(--text-muted);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .card .val {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 38px;
+            font-weight: 700;
+        }
+
+        /* Action Workspace Form Blocks */
+        .work-panel {
+            background: var(--bg-card);
+            backdrop-filter: blur(15px);
+            padding: 40px;
+            border-radius: 24px;
+            border: 1px solid var(--card-border);
+            max-width: 950px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .form-group label {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input, .form-group textarea {
+            background: var(--bg-input);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 16px;
+            border-radius: 12px;
+            color: white;
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
+            background-color: #0b1430;
+        }
+
+        .btn-action {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--neon-purple) 100%);
+            color: white;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(0, 112, 243, 0.4);
+        }
+
+        /* Data Processing Logs Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-card);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--card-border);
+            margin-top: 20px;
+        }
+
+        th, td { padding: 18px 24px; text-align: left; }
+
+        th {
+            background-color: rgba(0, 112, 243, 0.1);
+            color: var(--neon-cyan);
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        td {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            font-size: 15px;
+            color: #e2e8f0;
+        }
+
+        tr:hover td { background: rgba(255, 255, 255, 0.01); }
+
+        .badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .badge.safe { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid var(--accent-safe); }
+        .badge.scam { background: rgba(244, 63, 94, 0.15); color: #fb7185; border: 1px solid var(--accent-scam); }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">🛡️</div>
+                <h2>AI Job Guard Portal</h2>
+            </div>
+            <a href="/dashboard" class="active">📊 System Overview</a>
+            <a href="/job_analyser">🔍 Job Posting Verifier</a>
+            <a href="/scamsnap">📸 ScamSnap Analysis</a>
+            <a href="/recruitbot">💬 RecruitBot AI Assistant</a>
+            <a href="/history">📜 Audit Analytics Logs</a>
+            <a href="/logout" style="margin-top: auto; color: var(--accent-scam);">🚪 Exit Workspace</a>
+        </div>
+
+        <div class="main-content">
+            <h1>System Overview Dashboard</h1>
+            <p class="section-desc">Real-time telemetry and fraudulent pattern intelligence metrics.</p>
+            
+            <div class="stats-grid">
+                <div class="card">
+                    <h3>Total Verified Positions</h3>
+                    <div class="val">1,248</div>
+                </div>
+                <div class="card safe-card">
+                    <h3>Verified Legit Postings</h3>
+                    <div class="val" style="color: var(--accent-safe);">1,012</div>
+                </div>
+                <div class="card scam-card">
+                    <h3>Detected Fraud/Scams</h3>
+                    <div class="val" style="color: var(--accent-scam);">236</div>
+                </div>
+            </div>
+
+            <h2>Recent System Intelligence Activity</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Job Target Position</th>
+                        <th>Target Company</th>
+                        <th>Confidence Analytics Score</th>
+                        <th>System Threat Level Evaluation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Remote Data Processing Associate</td>
+                        <td>Global Tech Solutions Inc</td>
+                        <td>94.2% Verified</td>
+                        <td><span class="badge safe">Safe / Trusted</span></td>
+                    </tr>
+                    <tr>
+                        <td>Work-From-Home Package Reviewer</td>
+                        <td>Apex Logistics International</td>
+                        <td>12.5% Fraud Pattern</td>
+                        <td><span class="badge scam">Scam Flagged</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
